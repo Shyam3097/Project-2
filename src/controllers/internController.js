@@ -1,6 +1,5 @@
 const internModel = require("../models/internModel");
-const collegeModel = require("../models/collegeModel")
-const mongoose = require("mongoose");
+const collegeModel = require("../models/collegeModel");
 
 // =============================Create Intern Api==============================
 
@@ -9,19 +8,19 @@ const createIntern = async function (req, res) {
     const internData = req.body;
 
     const clgName = internData.collegeName
-    const clgData = await collegeModel.findOne({name:clgName, isDeleted:false})
+    const clgData = await collegeModel.findOne({ name: clgName, isDeleted: false })
 
-    if(!clgData) {return res.status(404).send({status:false, message: "collegeName not found"});}
-    internData.collegeId =clgData._id
-  
-    const savedInternData =  await internModel.create(internData);
-    return res.status(201).send({status:true, data: savedInternData});
-  } 
+    if (!clgData) { return res.status(404).send({ status: false, message: "collegeName not found" }); }
+    internData.collegeId = clgData._id
+
+    const savedInternData = await internModel.create(internData);
+    return res.status(201).send({ status: true, data: savedInternData });
+  }
   catch (err) {
-    return res.status(500).send({status: false, message: err.message});
+    return res.status(500).send({ status: false, message: err.message });
   }
 };
 
-module.exports.createIntern=createIntern
+module.exports.createIntern = createIntern
 
 

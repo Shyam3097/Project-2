@@ -22,7 +22,7 @@ const college = async function (req, res) {
 
 const getcollegeDetails = async function (req, res) {
     try {
-       
+
         let collegeName = req.query.collegeName;
         if (Object.keys(req.query).length == 0) return res.status(400).send({ status: false, msg: "Please apply filter" })
         if (!collegeName) {
@@ -31,7 +31,7 @@ const getcollegeDetails = async function (req, res) {
         const college = await collegeModel.findOne({ name: collegeName, isDeleted: false, });
         if (!college)
             return res.status(400).send({ status: false, message: "No college found" });
-            
+
         const interData = await internModel.find({ collegeId: college._id, isDeleted: false });
         if (interData.length == 0) {
             return res.status(404).send({ status: false, msg: "no such intern" })
@@ -54,7 +54,7 @@ const getcollegeDetails = async function (req, res) {
 
         };
 
-        res.status(200).send({ status: true, data: collegeDetails  });
+        res.status(200).send({ status: true, data: collegeDetails });
 
 
 
