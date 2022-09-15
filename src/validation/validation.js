@@ -10,7 +10,7 @@ function Boolean (value) {
 
 const collegeValidation = async function (req, res, next) {
     try {
-        if(req.query){
+        if (req.query) {
             return res.status(400).send("Invalid request........!!!");
         }
         let data = req.body;
