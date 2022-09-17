@@ -33,9 +33,6 @@ const getcollegeDetails = async function (req, res) {
             return res.status(400).send({ status: false, message: "No college found" });
 
         const interData = await internModel.find({ collegeId: college._id, isDeleted: false });
-        if (interData.length == 0) {
-            return res.status(404).send({ status: false, msg: "no such intern" })
-        }
         const interns = interData.map(intern => {
 
             return {
