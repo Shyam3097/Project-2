@@ -6,7 +6,7 @@ function Boolean (value) {
     return false
 }
 
-//============= college validation ======================================================
+//============= college validation ========================================
 
 const collegeValidation = async function (req, res, next) {
     try {
