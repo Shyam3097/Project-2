@@ -16,6 +16,4 @@ router.all("/*", function (req, res) {
     res.status(400).send("Invalid request........!!!")
 })
 
-
-
 module.exports = router;

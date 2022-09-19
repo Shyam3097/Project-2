@@ -12,42 +12,32 @@ const college = async function (req, res) {
     }
 
     catch (err) {
-        return res.status(500).send({ status: false, msg: err.message });
+        return res.status(500).send({ status: false, message: err.message });
     }
 }
 
-
-
-// =================================Get-CollegeDetails Api=============================
+// =================================Get CollegeDetails Api=============================
 
 const getcollegeDetails = async function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin','*')
     try {
 
         let collegeName = req.query.collegeName;
-        if (Object.keys(req.query).length == 0) return res.status(400).send({ status: false, msg: "Please apply filter" })
+        if (Object.keys(req.query).length == 0) return res.status(400).send({ status: false, message: "Please apply filter" })
         if (!collegeName) {
-            return res.status(400).send({ status: false, message: "college name is required" });
+            return res.status(400).send({ status: false, message: "College name is required" });
         }
         const college = await collegeModel.findOne({ name: collegeName, isDeleted: false, });
         if (!college)
             return res.status(400).send({ status: false, message: "No college found" });
-
-        const interData = await internModel.find({ collegeId: college._id, isDeleted: false });
-        const interns = interData.map(intern => {
-
-            return {
-                _id: intern._id,
-                name: intern.name,
-                email: intern.email,
-                mobile: intern.mobile
-            }
-        })
+            
+        const internData = await internModel.find({ collegeId: college._id, isDeleted: false }).select({_id: 1, name: 1, email: 1, mobile: 1});
 
         const collegeDetails = {
             name: college.name,
             fullName: college.fullName,
             logoLink: college.logoLink,
-            interns: interns
+            interns: internData
 
         };
 
@@ -61,7 +51,6 @@ const getcollegeDetails = async function (req, res) {
 
     }
 };
-
 
 // Destructuring
 module.exports = { college, getcollegeDetails };
